@@ -26,9 +26,8 @@ document.querySelectorAll("[data-lead-form]").forEach((leadForm) => {
       const data = await response.json();
 
       if (response.ok) {
-        formStatus.textContent = "Thank you! We have received your enquiry and will get back to you soon.";
-        formStatus.style.color = "#10b981";
-        leadForm.reset();
+        window.location.assign("thank-you.html");
+        return;
       } else {
         throw new Error(data.message || "Failed to send enquiry");
       }
