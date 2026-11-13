@@ -1,30 +1,45 @@
 document.querySelectorAll("[data-lead-form]").forEach((leadForm) => {
-  leadForm.addEventListener("submit", (event) => {
+  leadForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     if (!leadForm.reportValidity()) return;
 
     const details = new FormData(leadForm);
-    const message = [
-      "Hi Novus, I'd like to understand what my plant can save with AGVs/AMRs.",
-      `Name: ${details.get("name")}`,
-      `Company: ${details.get("company")}`,
-      `Phone: ${details.get("phone")}`,
-      `Work email: ${details.get("email")}`,
-    ].join("\n");
-    const whatsappUrl = `https://wa.me/919311078767?text=${encodeURIComponent(message)}`;
-    const sendLink = document.createElement("a");
-
-    sendLink.href = whatsappUrl;
-    sendLink.target = "_blank";
-    sendLink.rel = "noopener noreferrer";
-    sendLink.textContent = "Open WhatsApp to review and send your message";
     const formStatus = leadForm.querySelector(".form-status");
-    formStatus.replaceChildren(
-      document.createTextNode("Your message is ready. Your details have not been sent yet."),
-      document.createElement("br"),
-      sendLink,
-    );
-    sendLink.focus();
+    const submitButton = leadForm.querySelector('button[type="submit"]');
+    const originalButtonText = submitButton.textContent;
+
+    // Show loading state
+    formStatus.textContent = "Sending...";
+    formStatus.style.color = "";
+    submitButton.disabled = true;
+    submitButton.textContent = "Sending...";
+
+    try {
+      const response = await fetch(leadForm.action, {
+        method: "POST",
+        body: details,
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        formStatus.textContent = "Thank you! We have received your enquiry and will get back to you soon.";
+        formStatus.style.color = "#10b981";
+        leadForm.reset();
+      } else {
+        throw new Error(data.message || "Failed to send enquiry");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      formStatus.textContent = "Sorry, there was an error sending your enquiry. Please try again or call us directly.";
+      formStatus.style.color = "#ef4444";
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = originalButtonText;
+    }
   });
 });
 
