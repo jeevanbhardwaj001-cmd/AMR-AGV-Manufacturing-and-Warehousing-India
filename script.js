@@ -25,12 +25,24 @@ document.querySelectorAll("[data-lead-form]").forEach((leadForm) => {
 
       const data = await response.json();
 
-      if (response.ok) {
-        window.location.assign("thank-you.html");
-        return;
-      } else {
+      if (!response.ok || !data.ok) {
         throw new Error(data.message || "Failed to send enquiry");
       }
+
+      const leadDetails = {};
+      ["name", "company", "email", "phone"].forEach((field) => {
+        leadDetails[field] = details.get(field) || "";
+      });
+      try {
+        sessionStorage.setItem("novusLeadDetails", JSON.stringify(leadDetails));
+      } catch (storageError) {
+        console.warn("Could not save lead details for the estimate quiz.", storageError);
+      }
+
+      const destination = data.emailSent === false
+        ? "thank-you.html?notification=email-failed"
+        : "thank-you.html";
+      window.location.assign(destination);
     } catch (error) {
       console.error("Error:", error);
       formStatus.textContent = "Sorry, there was an error sending your enquiry. Please try again or call us directly.";
