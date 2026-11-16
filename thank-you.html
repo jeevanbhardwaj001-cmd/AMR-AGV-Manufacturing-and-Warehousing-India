@@ -8,7 +8,7 @@
     <title>Thank You | Novus Hi-Tech Robotics</title>
     <link rel="stylesheet" href="styles.css">
   </head>
-  <body class="thank-you-page">
+  <body class="thank-you-page" id="top">
     <header class="site-header">
       <div class="container header-inner">
         <a class="brand" href="index.html" aria-label="Novus Hi-Tech home">
@@ -20,27 +20,39 @@
 
     <main class="thank-you-main">
       <section class="thank-you-card" aria-labelledby="thank-you-title">
+        <div class="thank-you-status" aria-hidden="true">
+          <span>✓</span>
+        </div>
         <p class="eyebrow">REQUEST RECEIVED</p>
         <h1 id="thank-you-title">Thank you. Our team will be in touch within one working day.</h1>
         <p class="thank-you-copy">We’ve received your enquiry and will discuss your material movement needs and savings estimate with you.</p>
+        <p class="form-status" id="leadNotificationStatus" role="status" aria-live="polite" hidden></p>
+
         <div class="estimate-sharper">
           <h2>Want a sharper estimate before the call?</h2>
           <p>Eight quick taps, under a minute. Every answer is optional, and each one makes your estimate more accurate. You also see your recommended starting point right away.</p>
           <div class="estimate-sharper-actions">
-            <a class="button button-blue" href="#">Make my estimate sharper</a>
-            <a class="estimate-sharper-skip" href="#back-to-home">No thanks, I’ll wait for the call</a>
+            <button class="button button-blue" id="startEstimateQuiz" type="button">Make my estimate sharper</button>
+            <a class="estimate-sharper-skip" href="index.html">No thanks, I’ll wait for the call</a>
           </div>
         </div>
+
         <a class="button button-blue thank-you-home" id="back-to-home" href="index.html">Back to home</a>
+      </section>
+
+      <section class="estimate-quiz" id="estimateQuiz" aria-live="polite" hidden>
+        <div class="quiz-content" id="quizContent"></div>
       </section>
     </main>
 
     <footer class="site-footer">
       <div class="container footer-inner">
         <span>Novus Hi-Tech Robotic Systemz, A-18 Infocity, Sector-34, Gurgaon 122001, Haryana, India</span>
-        <a href="#">Back to top ↑</a>
+        <a href="#top">Back to top ↑</a>
         <span>Privacy Policy</span>
       </div>
     </footer>
+
+    <script src="estimate-quiz.js"></script>
   </body>
 </html>
