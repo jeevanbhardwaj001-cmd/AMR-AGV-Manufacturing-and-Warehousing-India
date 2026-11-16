@@ -335,7 +335,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, summary:focus-visibl
 }
 
 .problems, .process, .faq { background: #fff; }
-.applications, .team-awards { background: #f5f9fc; }
+.applications, .team-awards { background: #eef6fb; }
+.post-faq-video { background: #f5f9fc; }
+.post-faq-video .container { max-width: 960px; }
+.post-faq-video .eyebrow, .post-faq-video h2 { text-align: center; }
+.post-faq-video h2 { margin-bottom: 20px; }
 
 @font-face {
   font-family: "Novus Inter";
