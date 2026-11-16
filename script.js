@@ -1,3 +1,11 @@
+let caseStudyDownloadRequested = false;
+
+document.querySelectorAll("[data-case-study-download]").forEach((link) => {
+  link.addEventListener("click", () => {
+    caseStudyDownloadRequested = true;
+  });
+});
+
 document.querySelectorAll("[data-lead-form]").forEach((leadForm) => {
   leadForm.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -39,9 +47,23 @@ document.querySelectorAll("[data-lead-form]").forEach((leadForm) => {
         console.warn("Could not save lead details for the estimate quiz.", storageError);
       }
 
-      const destination = data.emailSent === false
-        ? "thank-you.html?notification=email-failed"
-        : "thank-you.html";
+      const shouldDownloadCaseStudy = caseStudyDownloadRequested;
+      caseStudyDownloadRequested = false;
+
+      if (shouldDownloadCaseStudy) {
+        const downloadLink = document.createElement("a");
+        downloadLink.href = "Vinfast%20case%20study_Novus%20Hi-Tech.pdf";
+        downloadLink.download = "Vinfast case study_Novus Hi-Tech.pdf";
+        document.body.append(downloadLink);
+        downloadLink.click();
+        downloadLink.remove();
+      }
+
+      const destinationParams = new URLSearchParams();
+      if (data.emailSent === false) destinationParams.set("notification", "email-failed");
+      if (shouldDownloadCaseStudy) destinationParams.set("download", "case-study");
+      const query = destinationParams.toString();
+      const destination = query ? `thank-you.html?${query}` : "thank-you.html";
       window.location.assign(destination);
     } catch (error) {
       console.error("Error:", error);

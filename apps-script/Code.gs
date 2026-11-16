@@ -1,5 +1,5 @@
 const CONFIG = {
-  recipient: "jeevan.kumar@novushitech.com",
+  recipients: ["vinay.kandpal@novushitech.com", "jeevan.kumar@novushitech.com", "marketing@novushitech.com"],
   sheetName: "Leads",
 };
 
@@ -91,7 +91,7 @@ function doPost(event) {
 
     try {
       MailApp.sendEmail({
-        to: CONFIG.recipient,
+        to: CONFIG.recipients.join(","),
         subject: subject,
         body: createEmailBody(subject, data, email),
       });

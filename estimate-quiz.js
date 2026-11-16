@@ -2,11 +2,16 @@ const quiz = document.getElementById("estimateQuiz");
 const quizContent = document.getElementById("quizContent");
 const startButton = document.getElementById("startEstimateQuiz");
 const leadNotificationStatus = document.getElementById("leadNotificationStatus");
+const caseStudyDownloadNotice = document.getElementById("caseStudyDownloadNotice");
 
 if (leadNotificationStatus && new URLSearchParams(window.location.search).get("notification") === "email-failed") {
   leadNotificationStatus.hidden = false;
   leadNotificationStatus.textContent = "Your enquiry was saved, but the email notification to our team could not be sent. Please contact us on WhatsApp if you need a prompt response.";
   leadNotificationStatus.style.color = "#b42318";
+}
+
+if (caseStudyDownloadNotice && new URLSearchParams(window.location.search).get("download") === "case-study") {
+  caseStudyDownloadNotice.hidden = false;
 }
 
 if (quiz && quizContent && startButton) {
@@ -246,7 +251,7 @@ if (quiz && quizContent && startButton) {
             </div>
             <div class="quiz-contact-actions">
               <button class="quiz-continue" type="submit">Email my answers to Novus</button>
-              <a class="quiz-link" href="https://wa.me/919311078767" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
+              <a class="quiz-link" href="https://wa.me/919311078767?text=Hi%2C%20I%20came%20from%20the%20Landing%20Page%20Leads%20for%20Mobile%20Robotics%20page.%20I%20would%20like%20to%20discuss%20AGV%20and%20AMR%20solutions%20for%20my%20plant." target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
             </div>
           </div>
           <p class="quiz-submit-status" role="status" aria-live="polite"></p>
